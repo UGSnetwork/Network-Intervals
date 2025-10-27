@@ -8,51 +8,57 @@
     :root{
       --bg:#ffffff; --panel:#ffffff; --border:#e5edf6; --muted:#5a6b7d; --text:#0e1b2b;
       --bell:#0066A4; --accent:var(--bell); --chip-bg:#ffffff; --chip-on:#e8f3fb; --chip-border:#b6d8f0; --focus:#3399d6;
-      --btn1:#1b7ec4; --btn2:#0b63a3;
+      --btn1:#1b7ec4; --btn2:#0b63a3; --soft:#f6faff;
     }
     html,body{height:100%}
     body{margin:0;font-family:Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;background:var(--bg);color:var(--text)}
     *{box-sizing:border-box}
     header{padding:18px 20px;border-bottom:2px solid var(--border);background:#fff}
-    h1{margin:0;font-size:clamp(18px,2.5vw,24px);letter-spacing:.2px;color:#0066A4}
+    h1{margin:0;font-size:clamp(18px,2.5vw,24px);letter-spacing:.2px;color:var(--bell)}
     main{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;max-width:1100px;margin:0 auto;padding:18px}
     @media (max-width:980px){main{grid-template-columns:1fr}}
     .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden}
     .section{padding:14px 14px 10px 14px;border-top:1px dashed var(--border)}
     .section:first-child{border-top:none}
-    .section h3{margin:0 0 8px 0;font-size:15px;color:#18324b;font-weight:700}
+    .section h3{margin:0 0 8px 0;font-size:18px;color:#18324b;font-weight:700}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     @media (max-width:700px){.row{grid-template-columns:1fr}}
     label{display:block;font-weight:600;margin:6px 0 6px 0}
-    input[type="number"], input[type="date"], select{
-      width:100%;padding:10px 12px;border-radius:10px;border:1px solid #cfe0ef;background:#fff;color:var(--text);outline:none
-    }
-    input[type="number"]:focus, input[type="date"]:focus, select:focus{
-      border-color:var(--focus);box-shadow:0 0 0 3px rgba(51,153,214,.18)
-    }
+
+    input[type="number"], input[type="date"], select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #cfe0ef;background:#fff;color:var(--text);outline:none}
+    input[type="number"]:focus, input[type="date"]:focus, select:focus{border-color:var(--focus);box-shadow:0 0 0 3px rgba(51,153,214,.18)}
+    select.select-compact{height:38px}
+
     input[type="checkbox"], input[type="radio"]{accent-color:var(--accent)}
     .chips{display:flex;gap:8px;flex-wrap:wrap}
     .chip{position:relative}
     .chip input{position:absolute;opacity:0;pointer-events:none}
-    .chip label{
-      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
-      background:var(--chip-bg);border:1px solid var(--chip-border);cursor:pointer;user-select:none;color:#143a56
-    }
+    .chip label{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--chip-bg);border:1px solid var(--chip-border);cursor:pointer;user-select:none;color:#143a56}
     .chip input:checked + label{background:var(--chip-on);border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+
     .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     button{cursor:pointer;border:none;border-radius:10px;padding:10px 14px;font-weight:700}
     .primary{background:linear-gradient(180deg,var(--btn1),var(--btn2));color:#fff}
-    .ghost{background:#fff;color:#0066A4;border:1px solid #0066A4}
+    .ghost{background:#fff;color:var(--bell);border:1px solid var(--bell)}
     .output{padding:14px}
-    .kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width:700px){.kpi{grid-template-columns:1fr}}
-    .box{background:#f6faff;border:1px solid var(--border);border-radius:12px;padding:12px}
-    .box .title{font-size:12px;color:#496483;text-transform:uppercase;letter-spacing:.8px}
-    .big{font-size:22px;font-weight:800;margin-top:4px;color:#07233a}
+
     .list{margin:12px 0 0 0;padding:0;list-style:none;display:grid;gap:8px}
-    .list li{background:#f6faff;border:1px solid var(--border);border-radius:10px;padding:10px;display:flex;justify-content:space-between;gap:10px}
+    .list li{background:var(--soft);border:1px solid var(--border);border-radius:10px;padding:10px;display:flex;justify-content:space-between;gap:10px}
     .list b{color:#0e3556}
     .muted{color:var(--muted)}
+    .badge{margin-left:8px;font-size:11px;color:#0e3556;background:var(--chip-on);border:1px solid var(--chip-border);padding:2px 8px;border-radius:999px}
+
+    .finalBox{margin-top:12px;background:#eaf4fc;border:1px solid #cfe0ef;border-radius:12px;padding:14px}
+    .finalTitle{font-size:12px;color:#496483;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+    .finalDates{font-size:26px;font-weight:800;color:#07233a;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .finalDates .arrow{opacity:.7}
+
+    .ud-grid{display:grid;grid-template-columns:220px repeat(3, 1fr);gap:8px;align-items:center}
+    .ud-head{font-size:12px;color:#496483;text-transform:uppercase;letter-spacing:.6px}
+    .ud-rowlabel{font-weight:700;color:#18324b}
+
+    .np-grid{display:grid;grid-template-columns:220px 1fr;gap:10px;align-items:center}
+    .np-rowlabel{font-weight:700;color:#18324b}
   </style>
 </head>
 <body>
@@ -61,9 +67,8 @@
   </header>
   <main>
     <section class="card">
-      <!-- Project -->
       <div class="section">
-        <h3>Project</h3>
+        <h3>Network</h3>
         <div class="row">
           <div>
             <label for="submissionDate">Submission date</label>
@@ -76,17 +81,16 @@
         </div>
       </div>
 
-      <!-- Survey -->
       <div class="section">
         <h3>Survey</h3>
         <div class="chips">
           <div class="chip"><input type="radio" name="survey" id="svNone" value="0" checked><label for="svNone">No survey required</label></div>
-          <div class="chip"><input type="radio" name="survey" id="svSm"   value="3"><label for="svSm">Small/Medium</label></div>
-          <div class="chip"><input type="radio" name="survey" id="svLg"   value="5"><label for="svLg">Large</label></div>
+          <div class="chip"><input type="radio" name="survey" id="svSm" value="3"><label for="svSm">Small</label></div>
+          <div class="chip"><input type="radio" name="survey" id="svMd" value="3"><label for="svMd">Medium</label></div>
+          <div class="chip"><input type="radio" name="survey" id="svLg" value="5"><label for="svLg">Large</label></div>
         </div>
       </div>
 
-      <!-- Region -->
       <div class="section">
         <h3>Region</h3>
         <div class="chips">
@@ -96,61 +100,53 @@
         </div>
       </div>
 
-      <!-- Acquire Utilities -->
       <div class="section">
         <h3>Acquire Utilities</h3>
         <div id="acqCity" class="chips" style="display:none;">
           <div class="chip"><input type="checkbox" id="acqWithinCity"><label for="acqWithinCity">Within City</label></div>
+          <div class="chip"><input type="checkbox" id="acqNoCity"><label for="acqNoCity">No</label></div>
         </div>
-        <div id="acqOutside" class="chips" style="display:none;">
+        <div id="acqNone" class="chips" style="display:none;">
           <div class="chip"><input type="checkbox" id="acqRM"><label for="acqRM">R.M. Sewer & Water</label></div>
           <div class="chip"><input type="checkbox" id="acqHG"><label for="acqHG">Hydro & Gas</label></div>
+          <div class="chip"><input type="checkbox" id="acqNoOut"><label for="acqNoOut">No</label></div>
         </div>
       </div>
 
-      <!-- New plans -->
       <div class="section">
-        <h3>New plans</h3>
-        <div class="row">
-          <div>
-            <label for="newPlans">New plans required</label>
-            <input type="number" id="newPlans" min="0" step="1" value="0" />
-          </div>
-          <div>
-            <label>Profiles required</label>
-            <input type="number" id="profileCount" min="0" value="0" />
-          </div>
+        <h3>New Plans</h3>
+        <div class="np-grid">
+          <div class="np-rowlabel">New plans to create</div>
+          <div><select id="newPlans" class="select-compact"></select></div>
+          <div class="np-rowlabel">Profiles to create</div>
+          <div><select id="profileCount" class="select-compact"></select></div>
         </div>
       </div>
 
-      <!-- Updates & Design -->
       <div class="section">
-        <h3>Updates &amp; Design</h3>
-        <div class="row">
-          <div id="uuCityGroup">
-            <label>Minor Plan Updates &amp; Design</label>
-            <input type="number" id="uuSimpleCity" min="0" value="0" />
-            <label style="margin-top:8px">Standard Plan Updates &amp; Design</label>
-            <input type="number" id="uuMediumCity" min="0" value="0" />
-            <label style="margin-top:8px">Complex Plan Updates &amp; Design</label>
-            <input type="number" id="uuComplexCity" min="0" value="0" />
-          </div>
-          <div id="uuOutGroup">
-            <label>Minor Plan Updates &amp; Design</label>
-            <input type="number" id="uuSimpleOut" min="0" value="0" />
-            <label style="margin-top:8px">Standard Plan Updates &amp; Design</label>
-            <input type="number" id="uuMediumOut" min="0" value="0" />
-            <label style="margin-top:8px">Complex Plan Updates &amp; Design</label>
-            <input type="number" id="uuComplexOut" min="0" value="0" />
-          </div>
+        <h3>Updates & Design</h3>
+        <div class="ud-grid">
+          <div></div>
+          <div class="ud-head">Minor</div>
+          <div class="ud-head">Standard</div>
+          <div class="ud-head">Complex</div>
+
+          <div class="ud-rowlabel" id="udRowCityLabel">Existing plan updates</div>
+          <div id="udRowCityMinor"><select id="uuSimpleCity" class="select-compact"></select></div>
+          <div id="udRowCityStandard"><select id="uuMediumCity" class="select-compact"></select></div>
+          <div id="udRowCityComplex"><select id="uuComplexCity" class="select-compact"></select></div>
+
+          <div class="ud-rowlabel" id="udRowOutLabel">Existing plan updates</div>
+          <div id="udRowOutMinor"><select id="uuSimpleOut" class="select-compact"></select></div>
+          <div id="udRowOutStandard"><select id="uuMediumOut" class="select-compact"></select></div>
+          <div id="udRowOutComplex"><select id="uuComplexOut" class="select-compact"></select></div>
         </div>
       </div>
 
-      <!-- Submissions -->
       <div class="section">
         <h3>Submissions</h3>
         <div class="chips" style="margin-bottom:8px">
-          <div class="chip"><input type="checkbox" id="rush"><label for="rush">Rush</label></div>
+          <div class="chip"><input type="checkbox" id="rush"><label for="rush">Rush - City of Winnipeg</label></div>
         </div>
         <div class="chips">
           <div class="chip"><input type="checkbox" id="subCity"><label for="subCity">City of Winnipeg</label></div>
@@ -160,9 +156,11 @@
           <div class="chip"><input type="checkbox" id="miHwb"><label for="miHwb">MI: Highways, WW & Bridges</label></div>
           <div class="chip"><input type="checkbox" id="miRail"><label for="miRail">Railway</label></div>
           <div class="chip"><input type="checkbox" id="miPipe"><label for="miPipe">Pipeline</label></div>
+          <div class="chip"><input type="checkbox" id="subBcr"><label for="subBcr">BCR</label></div>
+          <div class="chip"><input type="checkbox" id="easeRe"><label for="easeRe">Easement Re-Entry</label></div>
+          <div class="chip"><input type="checkbox" id="ease"><label for="ease">Easement</label></div>
         </div>
       </div>
-
       <div class="section">
         <div class="actions">
           <button class="primary" id="calcBtn">Calculate</button>
@@ -174,213 +172,194 @@
     <section class="card">
       <div class="output">
         <h3>Results</h3>
-        <div class="kpi">
-          <div class="box">
-            <div class="title">Total days (range)</div>
-            <div class="big"><span id="calMin">0</span>–<span id="calMax">0</span></div>
-          </div>
-          <div class="box">
-            <div class="title">Projected date (range)</div>
-            <div class="big"><span id="dateMin">—</span> → <span id="dateMax">—</span></div>
-          </div>
-        </div>
-
         <ul class="list" id="list"></ul>
+        <div class="finalBox">
+          <div class="finalTitle">Completion window</div>
+          <div class="finalDates"><span id="dateMinBig">—</span><span class="arrow">→</span><span id="dateMaxBig">—</span></div>
+        </div>
       </div>
     </section>
   </main>
 
   <script>
     const gi = id => document.getElementById(id);
-    const int = id => { const v = parseInt((gi(id)?.value||'').trim(),10); return isNaN(v)?0:v; };
-    const num = id => { const v = parseFloat((gi(id)?.value||'').trim()); return isNaN(v)?0:v; };
-    const ck  = id => !!gi(id)?.checked;
+    const setText = (id,val)=>{ const el = gi(id); if(el) el.textContent = val; };
+    const intVal = id => { const el = gi(id); const v = el ? parseInt((el.value||'').trim(), 10) : 0; return isNaN(v) ? 0 : v; };
+    const numVal = id => { const el = gi(id); const v = el ? parseFloat((el.value||'').trim()) : 0; return isNaN(v) ? 0 : v; };
+    const ck = id => !!gi(id)?.checked;
 
-    // Date helpers (UTC to avoid DST/locale issues)
+    function fillSelectRange(id){ const sel = gi(id); if(!sel) return; sel.innerHTML=''; for(let i=0;i<=9;i++){ const opt=document.createElement('option'); opt.value=String(i); opt.textContent=String(i); sel.appendChild(opt);} sel.value='0'; }
+    ['newPlans','profileCount','uuSimpleCity','uuMediumCity','uuComplexCity','uuSimpleOut','uuMediumOut','uuComplexOut'].forEach(fillSelectRange);
+
+    // Date helpers (UTC)
     const atUTC = (y,m,d)=> new Date(Date.UTC(y,m,d));
     const parseYMD = (s)=>{ const [Y,M,D]=s.split('-').map(x=>parseInt(x,10)); return atUTC(Y,M-1,D); };
-    const addCalendarDays = (date, days)=>{
-      const d=new Date(date); d.setUTCDate(d.getUTCDate()+Math.max(0,Math.ceil(days))); return d;
-    };
-    const diffCalendarDays = (startStr, endDate)=>{
-      if(!startStr || !endDate) return 0;
-      const s=parseYMD(startStr);
-      const e=atUTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate());
-      return Math.max(0, Math.round((e - s)/86400000));
-    };
+    const addCalendarDays = (date, days)=>{ if(!date) return null; const d=new Date(date); d.setUTCDate(d.getUTCDate()+Math.max(0,Math.ceil(days))); return d; };
+    const diffCalendarDays = (startStr, endDate)=>{ if(!startStr || !endDate) return 0; const s=parseYMD(startStr); const e=atUTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate()); return Math.max(0, Math.round((e - s)/86400000)); };
+    function isWeekend(d){ const day=d.getUTCDay(); return day===0 || day===6; }
+    function addWorkingDays(startDateStr, days){ if(!startDateStr) return null; let remaining=Math.max(0, Math.ceil(days)); const start=parseYMD(startDateStr); let date=new Date(start); while(isWeekend(date)){ date.setUTCDate(date.getUTCDate()+1); } if(remaining===0) return date; while(remaining>0){ date.setUTCDate(date.getUTCDate()+1); if(isWeekend(date)) continue; remaining -= 1; } return date; }
+    function fmtMDY(d){ if(!d) return '—'; const y=d.getUTCFullYear(); const m=String(d.getUTCMonth()+1).padStart(2,'0'); const da=String(d.getUTCDate()).padStart(2,'0'); return `${m}/${da}/${y}`; }
 
-    function isWeekend(d){ const day=d.getUTCDay(); return day===0||day===6; }
-    function addWorkingDays(startDateStr, days){
-      if(!startDateStr) return null;
-      let remaining=Math.max(0, Math.ceil(days));
-      const start=parseYMD(startDateStr);
-      let date=new Date(start);
-      while(isWeekend(date)){ date.setUTCDate(date.getUTCDate()+1); }
-      if(remaining===0) return date;
-      while(remaining>0){
-        date.setUTCDate(date.getUTCDate()+1);
-        if(isWeekend(date)) continue;
-        remaining -= 1;
-      }
-      return date;
+    function clearSelects(ids){ ids.forEach(id=>{ const el=gi(id); if(el) el.value='0'; }); }
+
+    // Acquire Utilities mutual exclusivity for 'No'
+    function wireAcqNo(){
+      const within = gi('acqWithinCity'); const noCity = gi('acqNoCity');
+      within?.addEventListener('change', e=>{ if(e.target.checked) noCity.checked=false; });
+      noCity?.addEventListener('change', e=>{ if(e.target.checked) within.checked=false; });
+      const rm = gi('acqRM'), hg = gi('acqHG'), noOut = gi('acqNoOut');
+      rm?.addEventListener('change', e=>{ if(e.target.checked) noOut.checked=false; });
+      hg?.addEventListener('change', e=>{ if(e.target.checked) noOut.checked=false; });
+      noOut?.addEventListener('change', e=>{ if(e.target.checked){ if(rm) rm.checked=false; if(hg) hg.checked=false; } });
     }
 
-    function clearInputsIn(groupId){
-      const g=gi(groupId); if(!g) return;
-      g.querySelectorAll('input[type="number"]').forEach(i=> i.value = '0');
-    }
+    // Region UI: toggle groups and UD rows
+    function showCityRow(show){ const ids=['udRowCityLabel','udRowCityMinor','udRowCityStandard','udRowCityComplex']; ids.forEach(i=> gi(i).style.display = show ? '' : 'none'); if(!show) clearSelects(['uuSimpleCity','uuMediumCity','uuComplexCity']); }
+    function showOutRow(show){ const ids=['udRowOutLabel','udRowOutMinor','udRowOutStandard','udRowOutComplex']; ids.forEach(i=> gi(i).style.display = show ? '' : 'none'); if(!show) clearSelects(['uuSimpleOut','uuMediumOut','uuComplexOut']); }
 
     function updateRegionUI(){
-      const city    = ck('regionCity');
+      const city = ck('regionCity');
       const eastern = ck('regionEastern');
       const norwest = ck('regionNorwest');
       const outsideAny = eastern || norwest;
-
-      gi('acqCity').style.display    = city ? '' : 'none';
-      gi('acqOutside').style.display = outsideAny ? '' : 'none';
-
-      gi('uuCityGroup').style.display = city ? '' : 'none';
-      gi('uuOutGroup').style.display  = outsideAny ? '' : 'none';
-
-      if(city && !outsideAny){ clearInputsIn('uuOutGroup'); gi('acqRM').checked=false; gi('acqHG').checked=false; }
-      if(outsideAny && !city){ clearInputsIn('uuCityGroup'); gi('acqWithinCity').checked=false; }
+      gi('acqCity').style.display = city ? '' : 'none';
+      gi('acqNone').style.display = outsideAny ? '' : 'none';
+      // clear all acquire utility picks when switching regions
+      gi('acqWithinCity').checked=false; gi('acqNoCity').checked=false;
+      gi('acqRM').checked=false; gi('acqHG').checked=false; gi('acqNoOut').checked=false;
+      showCityRow(city); showOutRow(outsideAny);
     }
 
     const regionIds = ['regionCity','regionEastern','regionNorwest'];
     regionIds.forEach(id=>{
       gi(id).addEventListener('change', (e)=>{
         if(e.target.checked){ regionIds.filter(x=>x!==id).forEach(x=> gi(x).checked=false); }
-        gi('acqWithinCity').checked=false; gi('acqRM').checked=false; gi('acqHG').checked=false;
+        gi('acqWithinCity').checked=false; gi('acqNoCity').checked=false; gi('acqRM').checked=false; gi('acqHG').checked=false; gi('acqNoOut').checked=false;
         updateRegionUI();
       });
     });
 
-    function getSurveyDays(){
-      const sel = document.querySelector('input[name="survey"]:checked');
-      return sel ? parseFloat(sel.value) : 0;
-    }
+    wireAcqNo();
+
+    function getSurveyDays(){ const sel = document.querySelector('input[name="survey"]:checked'); return sel ? parseFloat(sel.value) : 0; }
 
     function calc(){
       // A) Working-day effort: Survey vs Acquire (longer of the two)
       const survey = getSurveyDays();
       let acq = {min:0,max:0};
-      const city    = ck('regionCity');
+      const city = ck('regionCity');
       const eastern = ck('regionEastern');
       const norwest = ck('regionNorwest');
       const outsideAny = eastern || norwest;
-
       if(city){
-        if(ck('acqWithinCity')) acq = {min:1,max:3}; // working days
+        if(ck('acqNoCity')) acq = {min:0,max:0};
+        else if(ck('acqWithinCity')) acq = {min:1,max:3};
       } else if(outsideAny){
-        const picks=[];
-        if(ck('acqRM')) picks.push({min:3,max:5});   // working days
-        if(ck('acqHG')) picks.push({min:1,max:2});   // working days
-        if(picks.length){
-          acq = {min: Math.max(...picks.map(p=>p.min)), max: Math.max(...picks.map(p=>p.max))};
+        if(ck('acqNoOut')) acq = {min:0,max:0};
+        else {
+          const picks=[]; if(ck('acqRM')) picks.push({min:3,max:5}); if(ck('acqHG')) picks.push({min:1,max:2});
+          if(picks.length){ acq = {min: Math.max(...picks.map(p=>p.min)), max: Math.max(...picks.map(p=>p.max))}; }
         }
       }
-      const parA = {min: Math.max(survey, acq.min), max: Math.max(survey, acq.max)}; // working days
+      const parA = {min: Math.max(survey, acq.min), max: Math.max(survey, acq.max)};
 
-      // B) New plans & profiles (working days)
-      const newly    = int('newPlans');
+      // B) New plans & profiles
+      const newly = intVal('newPlans');
       const planDays = newly * 1;
-      const pCount   = int('profileCount');
+      const pCount = intVal('profileCount');
 
-      // C) Updates & Design (working days)
-      const sCity = int('uuSimpleCity'), sOut = int('uuSimpleOut');
-      const mCity = int('uuMediumCity'), mOut = int('uuMediumOut');
-      const cCity = int('uuComplexCity'), cOut = int('uuComplexOut');
+      // C) Updates & Design
+      const sCity = intVal('uuSimpleCity'), sOut = intVal('uuSimpleOut');
+      const mCity = intVal('uuMediumCity'), mOut = intVal('uuMediumOut');
+      const cCity = intVal('uuComplexCity'), cOut = intVal('uuComplexOut');
+      const uuSimple = sCity*1 + sOut*1;
+      const uuMedium = mCity*2 + mOut*1;
+      const uuComplex = cCity*3 + cOut*2;
+      const uuFixed = uuSimple + uuMedium + uuComplex;
+      const uuRange = {min: uuFixed + pCount*1, max: uuFixed + pCount*3};
 
-      const uuSimple  = sCity*1 + sOut*1;    // Minor
-      const uuMedium  = mCity*2 + mOut*1;    // Standard
-      const uuComplex = cCity*3 + cOut*2;    // Complex
-
-      const uuFixed   = uuSimple + uuMedium + uuComplex;                // working days
-      const uuRange   = {min: uuFixed + pCount*1, max: uuFixed + pCount*3}; // +1..3 for profiles
-
-      // D) Auto design & post-clerical (working days)
+      // D) Auto design & post-clerical
       const dSimple = sCity + sOut, dMed = mCity + mOut, dComp = cCity + cOut, dProf = pCount;
       const design = dSimple + dMed + dComp + dProf;
       const postClerical = dSimple*0.5 + dMed*0.5 + dComp*0.5;
 
-      // E) Submissions (parallel longest) — CALENDAR days
+      // E) Submissions — CALENDAR days (parallel longest)
       const subsCal = [];
-      // City of Winnipeg: fixed 14 calendar days
-      if(ck('subCity')) subsCal.push({min:14,max:14,label:'City of Winnipeg'});
-      if(ck('subAMM'))  subsCal.push({min:30,max:30,label:'AMM'});
-      if(ck('miGen'))   subsCal.push({min:30,max:45,label:'Highways'});
-      if(ck('miWater')) subsCal.push({min:30,max:45,label:'Waterways'});
-      if(ck('miHwb'))   subsCal.push({min:90,max:90,label:'MI: Highways, WW & Bridges'});
-      if(ck('miRail'))  subsCal.push({min:90,max:90,label:'Railway'});
-      if(ck('miPipe'))  subsCal.push({min:60,max:90,label:'Pipeline'});
+      const subsPicked = [];
+      if(ck('rush'))   { subsCal.push({min:1,max:3,label:'Rush - City of Winnipeg'}); subsPicked.push('Rush - City of Winnipeg'); }
+      if(ck('subCity')){ subsCal.push({min:14,max:14,label:'City of Winnipeg'}); subsPicked.push('City of Winnipeg'); }
+      if(ck('subAMM')) { subsCal.push({min:30,max:30,label:'AMM'}); subsPicked.push('AMM'); }
+      if(ck('miGen'))  { subsCal.push({min:30,max:45,label:'Highways'}); subsPicked.push('Highways'); }
+      if(ck('miWater')){ subsCal.push({min:30,max:45,label:'Waterways'}); subsPicked.push('Waterways'); }
+      if(ck('miHwb')) { subsCal.push({min:90,max:90,label:'MI: Highways, WW & Bridges'}); subsPicked.push('MI: Highways, WW & Bridges'); }
+      if(ck('miRail')){ subsCal.push({min:60,max:90,label:'Railway'}); subsPicked.push('Railway'); }
+      if(ck('miPipe')){ subsCal.push({min:60,max:90,label:'Pipeline'}); subsPicked.push('Pipeline'); }
+      if(ck('subBcr')){ subsCal.push({min:90,max:90,label:'BCR'}); subsPicked.push('BCR'); }
+      if(ck('easeRe')){ subsCal.push({min:30,max:30,label:'Easement Re-Entry'}); subsPicked.push('Easement Re-Entry'); }
+      if(ck('ease'))  { subsCal.push({min:60,max:60,label:'Easement'}); subsPicked.push('Easement'); }
 
-      const subCalRange = subsCal.length
-        ? {min: Math.max(...subsCal.map(s=>s.min)), max: Math.max(...subsCal.map(s=>s.max))}
-        : {min:0, max:0};
+      const subCalRange = subsCal.length ? {min: Math.max(...subsCal.map(s=>s.min)), max: Math.max(...subsCal.map(s=>s.max))} : {min:0, max:0};
 
-      // F) Optional sit (working days)
-      const sit = num('sitDays');
+      // F) Optional sit
+      const sit = numVal('sitDays');
 
-      // === Working-day effort (used only to place dates before calendar submission wait) ===
+      // === WORKING-DAY TOTAL ===
       const wdMin = Math.ceil(parA.min + planDays + uuRange.min + design + postClerical + sit);
       const wdMax = Math.ceil(parA.max + planDays + uuRange.max + design + postClerical + sit);
 
-      // === Projected dates: add working days, then calendar submission wait ===
+      // === Projected dates ===
       const submissionDate = gi('submissionDate').value;
       const afterWorkMin = addWorkingDays(submissionDate, wdMin);
       const afterWorkMax = addWorkingDays(submissionDate, wdMax);
-
       const dMin = addCalendarDays(afterWorkMin, subCalRange.min);
       const dMax = addCalendarDays(afterWorkMax, subCalRange.max);
 
-      // === Calendar totals (elapsed days from submission to projected date) ===
       const calMin = diffCalendarDays(submissionDate, dMin);
       const calMax = diffCalendarDays(submissionDate, dMax);
 
-      // KPIs (calendar only)
-      gi('calMin').textContent = (isFinite(calMin)?calMin:0).toString();
-      gi('calMax').textContent = (isFinite(calMax)?calMax:0).toString();
-      gi('dateMin').textContent = dMin ? dMin.toISOString().slice(0,10) : '—';
-      gi('dateMax').textContent = dMax ? dMax.toISOString().slice(0,10) : '—';
+      const minorPlans = sCity + sOut;
+      const standardPlans = mCity + mOut;
+      const complexPlans = cCity + cOut;
 
-      // Breakdown (clear units)
+      // Build list
       const list = gi('list'); list.innerHTML = '';
-      const add = (label, value) => {
-        const li = document.createElement('li');
-        const b = document.createElement('b'); b.textContent = label; li.appendChild(b);
-        const span = document.createElement('span'); span.className='muted'; span.textContent = value; li.appendChild(span);
-        list.appendChild(li);
-      };
-
+      const add = (label, value, badge) => { const li = document.createElement('li'); const left = document.createElement('div'); const b = document.createElement('b'); b.textContent = label; left.appendChild(b); if (badge){ const bd = document.createElement('span'); bd.className='badge'; bd.textContent = badge; left.appendChild(bd); } const right = document.createElement('span'); right.className='muted'; right.textContent = value; li.appendChild(left); li.appendChild(right); list.appendChild(li); };
       const svLabel = document.querySelector('input[name="survey"]:checked')?.labels[0].textContent || 'No survey required';
-      add('Survey', `${svLabel} (working days)`);
-      add('Acquire utilities', city ? (ck('acqWithinCity') ? 'City' : '—')
-                                   : (outsideAnyLabel()));
-      add('New plans required', String(newly));
-      add('Profiles required', String(pCount));
-      add('Approval submission', subsCal.length
-          ? `${subCalRange.min}–${subCalRange.max} calendar day(s)`
-          : '0 calendar day(s)');
-      add('Days range', `${calMin}–${calMax} day(s) (calendar)`);
-      add('Date range', `${gi('dateMin').textContent} → ${gi('dateMax').textContent}`);
 
-      function outsideAnyLabel(){
-        const eastern = ck('regionEastern'), norwest = ck('regionNorwest');
+      add('Survey', `${svLabel} `);
+      add('Acquire utilities', acqLabel());
+      add('New plans to create', String(newly));
+      add('Profiles to create', String(pCount));
+      add('Plan updates required', `Minor: ${minorPlans}, Standard: ${standardPlans}, Complex: ${complexPlans}`);
+      add('Survey and Design', `${wdMin}–${wdMax} working day(s)`, 'working days');
+      // Approvals selected
+      const approvalsList = subsPicked.length ? subsPicked.join(', ') : '—';
+      add('Approvals required', approvalsList);
+      // Wait and duration
+      add('Approvals wait', subsCal.length ? `${subCalRange.min}–${subCalRange.max} calendar day(s)` : '0 calendar day(s)', 'calendar');
+      add('Overall duration', `${calMin}–${calMax} day(s)`, 'calendar');
+
+      setText('dateMinBig', fmtMDY(dMin));
+      setText('dateMaxBig', fmtMDY(dMax));
+
+      function acqLabel(){
+        const city = ck('regionCity');
+        const eastern = ck('regionEastern');
+        const norwest = ck('regionNorwest');
+        const outsideAny = eastern || norwest;
+        if(!city && !outsideAny) return '—';
+        if(city){ if(ck('acqNoCity')) return 'No'; return ck('acqWithinCity') ? 'City' : '—'; }
+        // outside
+        if(ck('acqNoOut')) return 'No';
         const picked=[]; if(ck('acqRM')) picked.push('R.M. Sewer & Water'); if(ck('acqHG')) picked.push('Hydro & Gas');
-        const regionTxt = eastern ? 'Eastern' : (norwest ? 'Norwest' : 'Outside');
+        const regionTxt = eastern ? 'Eastern' : (norwest ? 'Norwest' : '—');
         return picked.length? `${regionTxt}: ${picked.join(' + ')}` : regionTxt;
       }
     }
 
     gi('calcBtn').addEventListener('click', e=>{ e.preventDefault(); calc(); });
     gi('resetBtn').addEventListener('click', ()=>{ window.location.reload(); });
-
-    (function init(){
-      const today = new Date();
-      const iso = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())).toISOString().slice(0,10);
-      gi('submissionDate').value = iso;
-      updateRegionUI();
-    })();
+    (function init(){ const today = new Date(); const iso = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())).toISOString().slice(0,10); gi('submissionDate').value = iso; updateRegionUI(); })();
   </script>
 </body>
 </html>
