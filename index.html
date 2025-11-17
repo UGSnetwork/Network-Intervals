@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BellMTS Network Approval Interval Tool</title>
+  <style>
+    :root{
+      --bell:#0066A4; --bell-600:#005a90; --bell-700:#004b80;
+      --ink:#0e1b2b; --ink-dim:#5a6b7d;
+      --panel:#ffffff; --bg:#f7fafc; --border:#e5edf6; --soft:#f0f7ff;
+      --chip-on:#e8f3fb; --chip-border:#b6d8f0; --focus:#3399d6;
+      --radius:14px; --shadow:0 6px 24px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;color:var(--ink);background:linear-gradient(0deg,#ffffff 0%, var(--bg) 100%)}
+
+    /* Intro banner (keep) */
+    .intro-wrap{padding:14px 16px}
+    .intro{max-width:1200px;margin:0 auto;background:linear-gradient(180deg, #f6fbff 0%, #eef6ff 100%);border:1px solid var(--border);border-left:5px solid var(--bell);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+    .intro h2{margin:0 0 6px 0;font-size:20px;color:var(--bell-700)}
+    .intro p{margin:6px 0;color:var(--ink)}
+
+    header{max-width:1200px;margin:0 auto;padding:4px 16px 0}
+    header h1{margin:8px 0 12px;font-size:26px;color:var(--bell)}
+
+    .page{max-width:1200px;margin:0 auto;padding:8px 16px 34px;display:grid;gap:16px;grid-template-columns: 1.08fr .92fr}
+    @media (max-width:1100px){.page{grid-template-columns:1fr}}
+
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .card .body{padding:12px 14px}
+
+    /* Section headings: larger, tighter spacing */
+    .sect{border-top:1px dashed var(--border)}
+    .sect:first-of-type{border-top:none}
+    .sect h2{margin:10px 14px 8px;color:#173a56;font-size:18px;letter-spacing:.2px}
+
+    /* Form layout */
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+    @media (max-width:760px){.row{grid-template-columns:1fr}}
+    label{font-weight:600;display:block;margin:4px 0;color:#24415f}
+    input[type="date"], input[type="number"], select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #cfe0ef;background:#fff;color:var(--ink);outline:none}
+    input[type="number"]:focus, input[type="date"]:focus, select:focus{border-color:var(--focus);box-shadow:0 0 0 3px rgba(51,153,214,.20)}
+    input[type="radio"], input[type="checkbox"]{accent-color:var(--bell)}
+
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{position:relative}
+    .chip input{position:absolute;opacity:0;pointer-events:none}
+    .chip label{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--chip-border);cursor:pointer;user-select:none;color:#143a56}
+    .chip input:checked + label{background:var(--chip-on);border-color:var(--bell);box-shadow:inset 0 0 0 1px var(--bell)}
+
+    /* UD grid */
+    .ud-grid{display:grid;grid-template-columns:220px repeat(3, 1fr);gap:8px;align-items:center}
+    .ud-head{font-size:12px;color:#496483;text-transform:uppercase;letter-spacing:.6px}
+    .ud-rowlabel{font-weight:700;color:#18324b}
+    .span-3{grid-column:2 / span 3}
+
+    /* Actions */
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;padding:10px 14px;border-top:1px dashed var(--border)}
+    button{cursor:pointer;border:none;border-radius:10px;padding:10px 14px;font-weight:700}
+    .btn-primary{background:linear-gradient(180deg, #1b7ec4, #0b63a3);color:#fff;border:1px solid #175d95}
+    .btn-ghost{background:#fff;color:var(--bell);border:1px solid var(--bell)}
+
+    /* Right sticky column */
+    .sticky{position:sticky;top:12px;align-self:start}
+
+    .results .header{padding:10px 14px;border-bottom:1px dashed var(--border);display:flex;justify-content:space-between;align-items:center}
+    .results .header h3{margin:0;color:#173a56;font-size:18px}
+    .list{margin:0;padding:10px 14px;list-style:none;display:grid;gap:8px}
+    .list li{background:var(--soft);border:1px solid var(--border);border-radius:10px;padding:8px 10px;display:flex;justify-content:space-between;gap:10px}
+    .list b{color:#0e3556}
+    .muted{color:var(--ink-dim)}
+    .badge{margin-left:8px;font-size:11px;color:#0e3556;background:#eef6ff;border:1px solid var(--chip-border);padding:2px 8px;border-radius:999px}
+
+    .finalBox{margin:8px 14px 14px;background:#eaf4fc;border:1px solid #cfe0ef;border-radius:12px;padding:12px}
+    .finalTitle{font-size:12px;color:#496483;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+    .finalDates{font-size:26px;font-weight:800;color:#07233a;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .finalDates .arrow{opacity:.7}
+  </style>
+</head>
+<body>
+  <!-- Intro (keep) -->
+  <div class="intro-wrap">
+    <div class="intro" role="region" aria-label="Intro">
+      <h2>Welcome to the BellMTS Network Approval Interval Tool</h2>
+      <p>This tool is designed to assist the Provisioner in determining lead times for various designs and approvals, helping set an appropriate construction start date when submitting a request through Access Support.</p>
+      <p class="muted">The dates provided are based on historical norms but may vary due to internal and external factors. These timelines represent the minimum lead times and are intended for urgent requests. If you are able to extend these dates further, please do so whenever possible.</p>
+    </div>
+  </div>
+
+  <header>
+    <h1>Network Approval Intervals</h1>
+  </header>
+
+  <main class="page" role="main">
+    <!-- Left column: inputs (non-collapsible) -->
+    <section class="card">
+      <div class="sect">
+        <h2>Network</h2>
+        <div class="body">
+          <div class="row">
+            <div>
+              <label for="submissionDate">Submission date</label>
+              <input type="date" id="submissionDate" />
+            </div>
+            <div>
+              <label for="sitDays">Job may sit (days)</label>
+              <input type="number" id="sitDays" min="0" step="0.5" value="0" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <h2>Survey</h2>
+        <div class="body">
+          <div class="chips" role="radiogroup" aria-label="Survey size">
+            <div class="chip"><input type="radio" name="survey" id="svNone" value="0" checked><label for="svNone">No survey required</label></div>
+            <div class="chip"><input type="radio" name="survey" id="svSm" value="3"><label for="svSm">Small</label></div>
+            <div class="chip"><input type="radio" name="survey" id="svMd" value="3"><label for="svMd">Medium</label></div>
+            <div class="chip"><input type="radio" name="survey" id="svLg" value="5"><label for="svLg">Large</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <h2>Region</h2>
+        <div class="body">
+          <div class="chips" role="group" aria-label="Region pick">
+            <div class="chip"><input type="checkbox" id="regionCity"><label for="regionCity">City of Winnipeg</label></div>
+            <div class="chip"><input type="checkbox" id="regionEastern"><label for="regionEastern">Eastern</label></div>
+            <div class="chip"><input type="checkbox" id="regionNorwest"><label for="regionNorwest">Norwest</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <h2>Acquire Utilities</h2>
+        <div class="body">
+          <div id="acqCity" class="chips" style="display:none;">
+            <div class="chip"><input type="checkbox" id="acqWithinCity"><label for="acqWithinCity">Within City</label></div>
+            <div class="chip"><input type="checkbox" id="acqNoCity"><label for="acqNoCity">No</label></div>
+          </div>
+          <div id="acqNone" class="chips" style="display:none;">
+            <div class="chip"><input type="checkbox" id="acqRM"><label for="acqRM">R.M. Sewer &amp; Water</label></div>
+            <div class="chip"><input type="checkbox" id="acqHG"><label for="acqHG">Hydro &amp; Gas</label></div>
+            <div class="chip"><input type="checkbox" id="acqNoOut"><label for="acqNoOut">No</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <h2>Updates & Design</h2>
+        <div class="body">
+          <div class="ud-grid" style="margin-bottom:8px">
+            <div></div>
+            <div class="ud-head">Minor</div>
+            <div class="ud-head">Standard</div>
+            <div class="ud-head">Complex</div>
+            <div class="ud-rowlabel" id="udRowCityLabel">Updates to Existing Plans</div>
+            <div id="udRowCityMinor"><select id="uuSimpleCity" class="select-compact"></select></div>
+            <div id="udRowCityStandard"><select id="uuMediumCity" class="select-compact"></select></div>
+            <div id="udRowCityComplex"><select id="uuComplexCity" class="select-compact"></select></div>
+            <div class="ud-rowlabel" id="udRowOutLabel">Updates to Existing Plans</div>
+            <div id="udRowOutMinor"><select id="uuSimpleOut" class="select-compact"></select></div>
+            <div id="udRowOutStandard"><select id="uuMediumOut" class="select-compact"></select></div>
+            <div id="udRowOutComplex"><select id="uuComplexOut" class="select-compact"></select></div>
+            <div class="ud-rowlabel" id="npRowLabel" style="display:none;">New Plans</div>
+            <div id="npMinorCell" style="display:none;"><select id="npMinor" class="select-compact"></select></div>
+            <div id="npStandardCell" style="display:none;"><select id="npStandard" class="select-compact"></select></div>
+            <div id="npComplexCell" style="display:none;"><select id="npComplex" class="select-compact"></select></div>
+            <div class="ud-rowlabel" id="npProfLabel" style="display:none;">Profiles Required</div>
+            <div class="span-3" id="npProfField" style="display:none;"><select id="profileCount" class="select-compact"></select></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sect">
+        <h2>Submissions</h2>
+        <div class="body">
+          <div class="chips" style="margin-bottom:6px">
+            <div class="chip"><input type="checkbox" id="rush"><label for="rush">Rush - City of Winnipeg</label></div>
+          </div>
+          <div class="chips">
+            <div class="chip"><input type="checkbox" id="subCity"><label for="subCity">City of Winnipeg</label></div>
+            <div class="chip"><input type="checkbox" id="subAMM"><label for="subAMM">AMM</label></div>
+            <div class="chip"><input type="checkbox" id="miGen"><label for="miGen">Highways</label></div>
+            <div class="chip"><input type="checkbox" id="miWater"><label for="miWater">Waterways</label></div>
+            <div class="chip"><input type="checkbox" id="miHwb"><label for="miHwb">MI: Highways, WW & Bridges</label></div>
+            <div class="chip"><input type="checkbox" id="miRail"><label for="miRail">Railway</label></div>
+            <div class="chip"><input type="checkbox" id="miPipe"><label for="miPipe">Pipeline</label></div>
+            <div class="chip"><input type="checkbox" id="subBcr"><label for="subBcr">BCR</label></div>
+            <div class="chip"><input type="checkbox" id="easeRe"><label for="easeRe">Easement Re-Entry</label></div>
+            <div class="chip"><input type="checkbox" id="ease"><label for="ease">Easement</label></div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn-ghost" id="resetBtn" type="button">Reset</button>
+          <button class="btn-primary" id="calcBtn">Calculate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right column: results (sticky) -->
+    <aside class="card sticky results" aria-live="polite">
+      <div class="header"><h3>Results</h3></div>
+      <ul class="list" id="list"></ul>
+      <div class="finalBox">
+        <div class="finalTitle">Completion window</div>
+        <div class="finalDates"><span id="dateMinBig">—</span><span class="arrow">→</span><span id="dateMaxBig">—</span></div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const gi = id => document.getElementById(id);
+    const setText = (id,val)=>{ const el = gi(id); if(el) el.textContent = val; };
+    const intVal = id => { const el = gi(id); const v = el ? parseInt((el.value||'').trim(), 10) : 0; return isNaN(v) ? 0 : v; };
+    const numVal = id => { const el = gi(id); const v = el ? parseFloat((el.value||'').trim()) : 0; return isNaN(v) ? 0 : v; };
+    const ck = id => !!gi(id)?.checked;
+
+    function fillSelectRange(id){ const sel = gi(id); if(!sel) return; sel.innerHTML=''; for(let i=0;i<=9;i++){ const opt=document.createElement('option'); opt.value=String(i); opt.textContent=String(i); sel.appendChild(opt);} sel.value='0'; }
+    ['uuSimpleCity','uuMediumCity','uuComplexCity','uuSimpleOut','uuMediumOut','uuComplexOut','npMinor','npStandard','npComplex','profileCount'].forEach(fillSelectRange);
+
+    // Date helpers (UTC)
+    const atUTC = (y,m,d)=> new Date(Date.UTC(y,m,d));
+    const parseYMD = (s)=>{ const [Y,M,D]=s.split('-').map(x=>parseInt(x,10)); return atUTC(Y,M-1,D); };
+    const addCalendarDays = (date, days)=>{ if(!date) return null; const d=new Date(date); d.setUTCDate(d.getUTCDate()+Math.max(0,Math.ceil(days))); return d; };
+    const diffCalendarDays = (startStr, endDate)=>{ if(!startStr || !endDate) return 0; const s=parseYMD(startStr); const e=atUTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate()); return Math.max(0, Math.round((e - s)/86400000)); };
+    function isWeekend(d){ const day=d.getUTCDay(); return day===0 || day===6; }
+    function addWorkingDays(startDateStr, days){ if(!startDateStr) return null; let remaining=Math.max(0, Math.ceil(days)); const start=parseYMD(startDateStr); let date=new Date(start); while(isWeekend(date)){ date.setUTCDate(date.getUTCDate()+1); } if(remaining===0) return date; while(remaining>0){ date.setUTCDate(date.getUTCDate()+1); if(isWeekend(date)) continue; remaining -= 1; } return date; }
+    function fmtMDY(d){ if(!d) return '—'; const y=d.getUTCFullYear(); const m=String(d.getUTCMonth()+1).padStart(2,'0'); const da=String(d.getUTCDate()).padStart(2,'0'); return `${m}/${da}/${y}`; }
+
+    // Acquire Utilities mutual exclusivity for 'No'
+    function wireAcqNo(){
+      const within = gi('acqWithinCity'); const noCity = gi('acqNoCity');
+      within?.addEventListener('change', e=>{ if(e.target.checked) noCity.checked=false; });
+      noCity?.addEventListener('change', e=>{ if(e.target.checked) within.checked=false; });
+      const rm = gi('acqRM'), hg = gi('acqHG'), noOut = gi('acqNoOut');
+      rm?.addEventListener('change', e=>{ if(e.target.checked) noOut.checked=false; });
+      hg?.addEventListener('change', e=>{ if(e.target.checked) noOut.checked=false; });
+      noOut?.addEventListener('change', e=>{ if(e.target.checked){ if(rm) rm.checked=false; if(hg) hg.checked=false; } });
+    }
+
+    // Toggle helpers
+    function showElems(ids, show){ ids.forEach(id=>{ const el=gi(id); if(el) el.style.display = show ? '' : 'none'; }); }
+
+    // Region UI: toggle groups and UD rows
+    function showCityRow(show){ const ids=['udRowCityLabel','udRowCityMinor','udRowCityStandard','udRowCityComplex']; showElems(ids, show); if(!show) ['uuSimpleCity','uuMediumCity','uuComplexCity'].forEach(id=>{ const el=gi(id); if(el) el.value='0';}); }
+    function showOutRow(show){ const ids=['udRowOutLabel','udRowOutMinor','udRowOutStandard','udRowOutComplex']; showElems(ids, show); if(!show) ['uuSimpleOut','uuMediumOut','uuComplexOut'].forEach(id=>{ const el=gi(id); if(el) el.value='0';}); }
+    function showUDExtras(show){ const ids=['npRowLabel','npMinorCell','npStandardCell','npComplexCell','npProfLabel','npProfField']; showElems(ids, show); if(!show){ ['npMinor','npStandard','npComplex','profileCount'].forEach(id=> gi(id).value='0'); } }
+
+    function updateRegionUI(){
+      const city = ck('regionCity');
+      const eastern = ck('regionEastern');
+      const norwest = ck('regionNorwest');
+      const outsideAny = eastern || norwest;
+      const anyRegion = city || outsideAny;
+      gi('acqCity').style.display = city ? '' : 'none';
+      gi('acqNone').style.display = outsideAny ? '' : 'none';
+      gi('acqWithinCity').checked=false; gi('acqNoCity').checked=false;
+      gi('acqRM').checked=false; gi('acqHG').checked=false; gi('acqNoOut').checked=false;
+      showCityRow(city); showOutRow(outsideAny); showUDExtras(anyRegion);
+    }
+
+    const regionIds = ['regionCity','regionEastern','regionNorwest'];
+    regionIds.forEach(id=>{
+      gi(id).addEventListener('change', (e)=>{
+        if(e.target.checked){ regionIds.filter(x=>x!==id).forEach(x=> gi(x).checked=false); }
+        gi('acqWithinCity').checked=false; gi('acqNoCity').checked=false; gi('acqRM').checked=false; gi('acqHG').checked=false; gi('acqNoOut').checked=false;
+        updateRegionUI();
+      });
+    });
+    wireAcqNo();
+
+    function getSurveyDays(){ const sel = document.querySelector('input[name="survey"]:checked'); return sel ? parseFloat(sel.value) : 0; }
+
+    function calc(){
+      const survey = getSurveyDays();
+      let acq = {min:0,max:0};
+      const city = ck('regionCity');
+      const eastern = ck('regionEastern');
+      const norwest = ck('regionNorwest');
+      const outsideAny = eastern || norwest;
+      if(city){
+        if(ck('acqNoCity')) acq = {min:0,max:0};
+        else if(ck('acqWithinCity')) acq = {min:1,max:3};
+      } else if(outsideAny){
+        if(ck('acqNoOut')) acq = {min:0,max:0};
+        else {
+          const picks=[]; if(ck('acqRM')) picks.push({min:3,max:5}); if(ck('acqHG')) picks.push({min:1,max:2});
+          if(picks.length){ acq = {min: Math.max(...picks.map(p=>p.min)), max: Math.max(...picks.map(p=>p.max))}; }
+        }
+      }
+      const parA = {min: Math.max(survey, acq.min), max: Math.max(survey, acq.max)};
+
+      const npMinor = intVal('npMinor');
+      const npStandard = intVal('npStandard');
+      const npComplex = intVal('npComplex');
+      const newly = npMinor + npStandard + npComplex; // +1 working day each
+      const planDays = newly * 1;
+
+      const pCount = intVal('profileCount');
+
+      const sCity = intVal('uuSimpleCity'), sOut = intVal('uuSimpleOut');
+      const mCity = intVal('uuMediumCity'), mOut = intVal('uuMediumOut');
+      const cCity = intVal('uuComplexCity'), cOut = intVal('uuComplexOut');
+
+      const uuSimple = sCity*1 + sOut*1 + npMinor*1;
+      const uuMedium = mCity*2 + mOut*1 + npStandard*2;
+      const uuComplex = cCity*3 + cOut*2 + npComplex*3;
+
+      const uuFixed = uuSimple + uuMedium + uuComplex;
+      const uuRange = {min: uuFixed + pCount*1, max: uuFixed + pCount*3};
+
+      const dSimple = (sCity + sOut) + npMinor;
+      const dMed = (mCity + mOut) + npStandard;
+      const dComp = (cCity + cOut) + npComplex;
+      const dProf = pCount;
+      const design = dSimple + dMed + dComp + dProf;
+      const postClerical = dSimple*0.5 + dMed*0.5 + dComp*0.5;
+
+      const subsCal = [];
+      const subsPicked = [];
+      if(ck('rush')) { subsCal.push({min:1,max:3,label:'Rush - City of Winnipeg'}); subsPicked.push('Rush - City of Winnipeg'); }
+      if(ck('subCity')){ subsCal.push({min:14,max:14,label:'City of Winnipeg'}); subsPicked.push('City of Winnipeg'); }
+      if(ck('subAMM')) { subsCal.push({min:30,max:30,label:'AMM'}); subsPicked.push('AMM'); }
+      if(ck('miGen')) { subsCal.push({min:30,max:45,label:'Highways'}); subsPicked.push('Highways'); }
+      if(ck('miWater')){ subsCal.push({min:30,max:45,label:'Waterways'}); subsPicked.push('Waterways'); }
+      if(ck('miHwb')) { subsCal.push({min:90,max:90,label:'MI: Highways, WW & Bridges'}); subsPicked.push('MI: Highways, WW & Bridges'); }
+      if(ck('miRail')){ subsCal.push({min:60,max:90,label:'Railway'}); subsPicked.push('Railway'); }
+      if(ck('miPipe')){ subsCal.push({min:60,max:90,label:'Pipeline'}); subsPicked.push('Pipeline'); }
+      if(ck('subBcr')){ subsCal.push({min:90,max:90,label:'BCR'}); subsPicked.push('BCR'); }
+      if(ck('easeRe')){ subsCal.push({min:30,max:30,label:'Easement Re-Entry'}); subsPicked.push('Easement Re-Entry'); }
+      if(ck('ease')) { subsCal.push({min:60,max:60,label:'Easement'}); subsPicked.push('Easement'); }
+      const subCalRange = subsCal.length ? {min: Math.max(...subsCal.map(s=>s.min)), max: Math.max(...subsCal.map(s=>s.max))} : {min:0, max:0};
+
+      const sit = numVal('sitDays');
+
+      const wdMin = Math.ceil(parA.min + planDays + uuRange.min + design + postClerical + sit);
+      const wdMax = Math.ceil(parA.max + planDays + uuRange.max + design + postClerical + sit);
+
+      const submissionDate = gi('submissionDate').value;
+      const afterWorkMin = addWorkingDays(submissionDate, wdMin);
+      const afterWorkMax = addWorkingDays(submissionDate, wdMax);
+      const dMin = addCalendarDays(afterWorkMin, subCalRange.min);
+      const dMax = addCalendarDays(afterWorkMax, subCalRange.max);
+      const calMin = diffCalendarDays(submissionDate, dMin);
+      const calMax = diffCalendarDays(submissionDate, dMax);
+
+      const minorPlans = (sCity + sOut) + npMinor;
+      const standardPlans = (mCity + mOut) + npStandard;
+      const complexPlans = (cCity + cOut) + npComplex;
+
+      const list = gi('list'); list.innerHTML = '';
+      const add = (label, value, badge) => { const li = document.createElement('li'); const left = document.createElement('div'); const b = document.createElement('b'); b.textContent = label; left.appendChild(b); if (badge){ const bd = document.createElement('span'); bd.className='badge'; bd.textContent = badge; left.appendChild(bd); } const right = document.createElement('span'); right.className='muted'; right.textContent = value; li.appendChild(left); li.appendChild(right); list.appendChild(li); };
+
+      const svLabel = document.querySelector('input[name="survey"]:checked')?.labels[0].textContent || 'No survey required';
+      add('Survey', `${svLabel} `);
+      add('Acquire utilities', acqLabel());
+      add('New Plans', `Minor: ${npMinor}, Standard: ${npStandard}, Complex: ${npComplex}`);
+      add('Updates to Existing Plans', `Minor: ${minorPlans}, Standard: ${standardPlans}, Complex: ${complexPlans}`);
+      add('Profiles Required', String(pCount));
+      add('Survey and Design', `${wdMin}–${wdMax} working day(s)`, 'working days');
+      const approvalsList = subsPicked.length ? subsPicked.join(', ') : '—';
+      add('Approvals required', approvalsList);
+      add('Approvals wait', subsCal.length ? `${subCalRange.min}–${subCalRange.max} calendar day(s)` : '0 calendar day(s)', 'calendar');
+      add('Overall duration', `${calMin}–${calMax} day(s)`, 'calendar');
+      setText('dateMinBig', fmtMDY(dMin));
+      setText('dateMaxBig', fmtMDY(dMax));
+
+      function acqLabel(){
+        const city = ck('regionCity');
+        const eastern = ck('regionEastern');
+        const norwest = ck('regionNorwest');
+        const outsideAny = eastern || norwest;
+        if(!city && !outsideAny) return '—';
+        if(city){ if(ck('acqNoCity')) return 'No'; return ck('acqWithinCity') ? 'City' : '—'; }
+        if(ck('acqNoOut')) return 'No';
+        const picked=[]; if(ck('acqRM')) picked.push('R.M. Sewer & Water'); if(ck('acqHG')) picked.push('Hydro & Gas');
+        const regionTxt = eastern ? 'Eastern' : (norwest ? 'Norwest' : '—');
+        return picked.length? `${regionTxt}: ${picked.join(' + ')}` : regionTxt;
+      }
+    }
+
+    gi('calcBtn').addEventListener('click', e=>{ e.preventDefault(); calc(); });
+    gi('resetBtn').addEventListener('click', ()=>{ window.location.reload(); });
+
+    (function init(){ const today = new Date(); const iso = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate())).toISOString().slice(0,10); gi('submissionDate').value = iso; updateRegionUI(); })();
+  </script>
+</body>
+</html>
